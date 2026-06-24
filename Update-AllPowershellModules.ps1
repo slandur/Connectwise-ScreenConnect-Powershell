@@ -29,6 +29,11 @@
     Version: 1.0.0
 #>
 
+#!ps
+#MaxLength=100000
+#timeout=10000000
+
+
 [CmdletBinding(
     SupportsShouldProcess = $true,
     ConfirmImpact = 'Medium'
