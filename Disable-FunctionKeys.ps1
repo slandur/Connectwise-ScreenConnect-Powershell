@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Applies a custom Scancode Map registry entry on HP devices to disable specific keyboard keys.
+    Applies a custom Scancode Map registry entry on G4 HP devices to disable specific keyboard keys that turn off wireless radios.
 
 .DESCRIPTION
     Retrieves the device's BIOS serial number via CIM and checks for the HP '5CG' serial prefix.
@@ -42,6 +42,10 @@
 .LINK
     https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/keyboard-and-mouse-class-drivers
 #>
+
+#!ps
+#MaxLength=100000
+#timeout=10000000
 
 #Requires -RunAsAdministrator
 
