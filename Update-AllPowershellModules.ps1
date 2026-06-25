@@ -1,4 +1,9 @@
+#!ps
+#MaxLength=100000
+#timeout=10000000
+
 #Requires -Version 5.1
+#Requires -RunAsAdministrator
 
 <#
 .SYNOPSIS
