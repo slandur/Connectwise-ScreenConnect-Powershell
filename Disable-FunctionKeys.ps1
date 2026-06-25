@@ -1,3 +1,7 @@
+#!ps
+#MaxLength=100000
+#timeout=10000000
+
 <#
 .SYNOPSIS
     Applies a custom Scancode Map registry entry on G4 HP devices to disable specific keyboard keys that turn off wireless radios.
@@ -43,9 +47,7 @@
     https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/keyboard-and-mouse-class-drivers
 #>
 
-#!ps
-#MaxLength=100000
-#timeout=10000000
+
 
 #Requires -RunAsAdministrator
 

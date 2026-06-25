@@ -1,6 +1,6 @@
 # ConnectWise Command Reference
 
-A reference sheet for ConnectWise remote commands used in day-to-day endpoint management at VSCHSD.
+A reference sheet for ConnectWise remote commands used in day-to-day endpoint management at work.
 
 ---
 
@@ -39,7 +39,7 @@ A reference sheet for ConnectWise remote commands used in day-to-day endpoint ma
 > Adds the GoGuardian license registry key via ConnectWise command line. Forces an immediate reboot.
 
 ```cmd
-reg add "HKLM\SOFTWARE\Policies\GoGuardian" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v LicenseTag /t REG_SZ /d "lnlhobhgeiihnkmkpkdagbijljeggalb" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v MinimizeToSystemTray /t REG_SZ /d "true" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v StartMinimizedToSystemTray /t REG_SZ /d "true" /f & shutdown /r /f /t 0
+reg add "HKLM\SOFTWARE\Policies\GoGuardian" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v LicenseTag /t REG_SZ /d "<LICENSE NUMBER>" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v MinimizeToSystemTray /t REG_SZ /d "true" /f & reg add "HKLM\SOFTWARE\Policies\GoGuardian" /v StartMinimizedToSystemTray /t REG_SZ /d "true" /f & shutdown /r /f /t 0
 ```
 
 ---
@@ -55,7 +55,7 @@ reg add "HKLM\SOFTWARE\Policies\GoGuardian" /f & reg add "HKLM\SOFTWARE\Policies
 #MaxLength=100000
 #timeout=10000000
 
-$IPAddress   = "10.31.4.23"
+$IPAddress   = "10.x.x.x"
 $PrinterName = "Lexmark CX735"
 $Driver      = "Lexmark Universal v2 XL"
 
@@ -75,8 +75,8 @@ Add-Printer -Name "$PrinterName" -PortName "$IPAddress" -DriverName "$Driver"
 #MaxLength=100000
 #timeout=10000000
 
-$OldIP = "10.35.1.178"
-$NewIP = "10.31.4.41"
+$OldIP = "10.x.x.x"
+$NewIP = "10.x.x.x"
 
 # Get printers using the old IP port
 $Printers = Get-Printer | Where-Object { $_.PortName -like "*$OldIP*" }
@@ -202,7 +202,7 @@ Send to SMART Cloud                 Local  SMART Notebook Documen...     SMRTPor
 OneNote (Desktop)                   Local  Send to Microsoft OneN...     nul:              False   False
 Microsoft Print to PDF              Local  Microsoft Print To PDF        PORTPROMPT:       False   False
 Lexmark Secure Print                Local  Lexmark Universal v2 XL       LPM Server Port   False   False
-ISCCX725                            Local  Lexmark Universal v2 XL       172.16.47.1       False   False
+Lexmark X725                        Local  Lexmark Universal v2 XL       172.16.x.x       False   False
 Adobe PDF                           Local  Adobe PDF Converter           Documents\*.pdf   False   False
 ```
 
@@ -242,7 +242,7 @@ $LegalNoticeMessage = "This computer has been locked. Please bring this laptop t
 
 $RegistryCredentialProviders = (Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers').PSChildName
 
-$CredentialProviders = "{01A30791-40AE-4653-AB2E-FD210019AE88},{1b283861-754f-4022-ad47-a5eaaa618894},{1ee7337f-85ac-45e2-a23c-37c753209769},{2135f72a-90b5-4ed3-a7f1-8bb705ac276a},{25CBB996-92ED-457e-B28C-4774084BD562},{27FBDB57-B613-4AF2-9D7E-4FA7A66C21AD},{3dd6bec0-8193-4ffe-ae25-e08e39ea4063},{48B4E58D-2791-456C-9091-D524C6C706F2},{600e7adb-da3e-41a4-9225-3c0399e88c0c},{60b78e88-ead8-445c-9cfd-0b87f74ea6cd},{8841d728-1a76-4682-bb6f-a9ea53b4b3ba},{8AF662BF-65A0-4D0A-A540-A338A999D36F},{8FD7E19C-3BF7-489B-A72C-846AB3678C96},{94596c7e-3744-41ce-893e-bbf09122f76a},{BEC09223-B018-416D-A0AC-523971B639F5},{C5D7540A-CD51-453B-B22B-05305BA03F07},{C885AA15-1764-4293-B82A-0586ADD46B35},{cb82ea12-9f71-446d-89e1-8d0924e1256e},{D6886603-9D2F-4EB2-B667-1971041FA96B},{e74e57b0-6c6d-44d5-9cda-fb2df5ed7435},{F8A0B131-5F68-486c-8040-7E8FC3C85BB6},{F8A1793B-7873-4046-B2A7-1F318747F427}"
+$CredentialProviders = "<CREDENTIALS NUMBERS>"
 
 $RegistryPath   = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 $RegistryNames  = @("LegalNoticeCaption","LegalNoticeText","ExcludedCredentialProviders")
@@ -331,7 +331,7 @@ Remove-Printer -Name "Lexmark CS410n - Rm 235"
 #MaxLength=100000
 #timeout=10000000
 
-Rename-Computer "DADM09WS01"
+Rename-Computer "<COMPUTER NAME>"
 ```
 
 To restart after renaming:
@@ -379,7 +379,7 @@ Powershell -command "Set-AudioDevice -Index 1"
 
 ## SET-AUTOLOGON REGKEYS
 
-> Configures auto-logon via registry keys for the `iiqlaptops` loaner account.
+> Configures auto-logon via registry keys for the `USERNAME` user account.
 
 ```powershell
 #!ps
@@ -391,16 +391,16 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
 
 Set-ItemProperty -Path $RegPath -Name "AutoAdminLogon"   -Value "1"          -Type String -Force
-Set-ItemProperty -Path $RegPath -Name "DefaultUsername"  -Value "iiqlaptops" -Type String -Force
-Set-ItemProperty -Path $RegPath -Name "DefaultPassword"  -Value "vslaptops"  -Type String -Force
-Set-ItemProperty -Path $RegPath -Name "DefaultDomainName"-Value "vschsd.org" -Type String -Force
+Set-ItemProperty -Path $RegPath -Name "DefaultUsername"  -Value "<USERNAME>" -Type String -Force
+Set-ItemProperty -Path $RegPath -Name "DefaultPassword"  -Value "<PASSWORD>"  -Type String -Force
+Set-ItemProperty -Path $RegPath -Name "DefaultDomainName"-Value "<DOMAIN NAME>" -Type String -Force
 ```
 
 ---
 
 ## SET-AUTOLOGON SYSINTERNALS
 
-> Configures auto-logon using Sysinternals AutoLogon64 for the `iiqloaners@vschsd.org` account.
+> Configures auto-logon using Sysinternals AutoLogon64 for the `USERNAME@DOMAINNAME.COM` account.
 
 ```powershell
 #!ps
@@ -409,10 +409,10 @@ Set-ItemProperty -Path $RegPath -Name "DefaultDomainName"-Value "vschsd.org" -Ty
 
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
-$Username     = "iiqloaners@vschsd.org"
+$Username     = "USERNAME@DOMAINNAME.COM"
 $Domain       = "AzureAD"
-$Password     = "vslaptops"
-$AutologonPath = "C:\Users\mrteach\Desktop\AutoLogon\Autologon64.exe"
+$Password     = "<PASSWORD>"
+$AutologonPath = "C:\Users\<USERNAME>\Desktop\AutoLogon\Autologon64.exe"
 
 Start-Process -FilePath $AutologonPath -ArgumentList "/accepteula $Username $Domain $Password" -Wait
 ```
@@ -430,10 +430,10 @@ ipconfig /all
 **Sample Output:**
 
 ```
-Connection-specific DNS Suffix  . : vshs.local
-IPv4 Address. . . . . . . . . . . : 172.16.44.4
-Subnet Mask . . . . . . . . . . . : 255.255.252.0
-Default Gateway . . . . . . . . . : 172.16.44.254
+Connection-specific DNS Suffix  . : domain.local
+IPv4 Address. . . . . . . . . . . : 172.16.x.x
+Subnet Mask . . . . . . . . . . . : 255.255.255.0
+Default Gateway . . . . . . . . . : 172.16.x.254
 ```
 
 ---
